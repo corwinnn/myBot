@@ -18,6 +18,7 @@ def new_docs(n):
     articles = Article.select()\
         .order_by(-Article.upd)\
         .limit(n)
+    print(n, articles)
     return articles
 
 
