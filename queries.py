@@ -174,10 +174,12 @@ def beautiful(topic_name):
     text = ''
     for word in words:
         text += ' ' + word.name
+    stopwords = set(stop_words.get_stop_words('ru'))
     word_cloud = wordcloud.WordCloud(max_words=200,
                                      height=960,
                                      width=960,
-                                     background_color='white').generate(text)
+                                     background_color='white',
+                                     stopwords=stopwords).generate(text)
 
     image = word_cloud.to_image()
     image.save('image.png')
