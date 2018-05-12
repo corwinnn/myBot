@@ -1,5 +1,5 @@
 from peewee import *
-db = SqliteDatabase("wee.db")
+db = SqliteDatabase('database/wee.db')
 
 
 class Topic(Model):
