@@ -85,6 +85,7 @@ def describe_topic(message):
 
 @bot.message_handler(content_types=['text'])
 def get_message(message):
+    setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
 
     if users[message.chat.id].status == 'start':
