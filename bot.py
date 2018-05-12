@@ -31,19 +31,11 @@ def new_docs(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'new_docs'
-    bot.send_message(message.chat.id, 'How many?')
-
-
-@bot.message_handler(commands=['new_docs'])
-def new_docs(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'new_docs'
     bot.send_message(message.chat.id, 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['new_topics'])
-def new_docs(message):
+def new_topics(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'new_topics'
@@ -51,7 +43,7 @@ def new_docs(message):
 
 
 @bot.message_handler(commands=['topic'])
-def new_docs(message):
+def topic(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'topic'
@@ -59,7 +51,7 @@ def new_docs(message):
 
 
 @bot.message_handler(commands=['doc'])
-def new_docs(message):
+def doc(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'doc'
@@ -67,7 +59,7 @@ def new_docs(message):
 
 
 @bot.message_handler(commands=['words'])
-def new_docs(message):
+def words(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'words'
@@ -84,7 +76,7 @@ def get_message(message):
         number = int(user_text)
         articles = queries.new_docs(number)
         for a in articles:
-            bot.send_message(message.chat.id, a.name, a.href)
+            bot.send_message(message.chat.id, a.name + '\n' + a.href)
         users[message.chat.id].status = 'start'
     if users[message.chat.id].status == 'new_topics':
         user_text = message.text
