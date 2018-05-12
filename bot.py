@@ -1,6 +1,6 @@
 import json
 import re
-from database import queries
+import queries
 import config
 import telebot
 from User import User
