@@ -1,6 +1,6 @@
 import json
 import re
-
+from database import queries
 import config
 import telebot
 from User import User
@@ -26,15 +26,30 @@ def handle_start_help_stop(message):
     users[message.chat.id].status = 'start'
 
 
-''''@bot.message_handler(commands=['get_titles'])
-def get_titles(message):
+@bot.message_handler(commands=['new_docs'])
+def new_docs(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'read_number'
+    users[message.chat.id].status = 'new_docs'
     bot.send_message(message.chat.id, 'How many?')
 
 
-@bot.message_handler(commands=['get_articles_from_title'])
+@bot.message_handler(content_types=['text'])
+def get_message(message):
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    if users[message.chat.id].status == 'start':
+        bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
+    if users[message.chat.id].status == 'new_docs':
+        s = message.text
+        number = int(s)
+        articles = queries.new_docs(number)
+        for a in articles:
+            bot.send_message(message.chat.id, a.text)
+        users[message.chat.id].status = 'start'
+
+
+
+''''@bot.message_handler(commands=['get_articles_from_title'])
 def get_articles(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
