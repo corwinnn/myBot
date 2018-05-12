@@ -173,7 +173,8 @@ def beautiful(topic_name):
         .order_by(-peewee.fn.count(Tag.name)) \
         .limit(50)
     text = ' '.join(word.name for word in words)
-    stopwords = set(stop_words.get_stop_words('ru'))
+    print(text)
+    '''stopwords = set(stop_words.get_stop_words('ru'))
     word_cloud = wordcloud.WordCloud(max_words=50,
                                      height=800,
                                      width=800,
@@ -181,4 +182,4 @@ def beautiful(topic_name):
                                      stopwords=stopwords).generate(text)
 
     image = word_cloud.to_image()
-    image.save('image.png')
+    image.save('image.png')'''
