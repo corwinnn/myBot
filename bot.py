@@ -153,8 +153,8 @@ def get_message(message):
             with open(files[2], 'rb') as plot1:
                 bot.send_photo(message.chat.id, plot1)
             users[message.chat.id].status = 'start'
-    else:
-        bot.send_message(message.chat.id, 'Try again, please.')
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
 
 
     if users[message.chat.id].status == 'describe_topic':
