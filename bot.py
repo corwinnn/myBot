@@ -45,8 +45,9 @@ def get_message(message):
         print(number, type(number))
         articles = queries.new_docs(number)
         print('oe')
+        print(len(articles))
         for a in articles:
-            bot.send_message(message.chat.id, a.text)
+            bot.send_message(message.chat.id, a.name, a.href)
         users[message.chat.id].status = 'start'
 
 
