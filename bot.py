@@ -42,7 +42,9 @@ def get_message(message):
     if users[message.chat.id].status == 'new_docs':
         s = message.text
         number = int(s)
+        print(number, type(number))
         articles = queries.new_docs(number)
+        print('oe')
         for a in articles:
             bot.send_message(message.chat.id, a.text)
         users[message.chat.id].status = 'start'
