@@ -172,13 +172,11 @@ def beautiful(topic_name):
         .group_by(Tag.name) \
         .order_by(-peewee.fn.count(Tag.name)) \
         .limit(50)
-    text = ''
-    for word in words:
-        text += ' ' + word.name
+    text = ' '.join(word.name for word in words)
     stopwords = set(stop_words.get_stop_words('ru'))
-    word_cloud = wordcloud.WordCloud(max_words=200,
-                                     height=960,
-                                     width=960,
+    word_cloud = wordcloud.WordCloud(max_words=50,
+                                     height=800,
+                                     width=800,
                                      background_color='white',
                                      stopwords=stopwords).generate(text)
 
