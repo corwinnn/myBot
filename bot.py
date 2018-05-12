@@ -88,6 +88,10 @@ def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
 
     if users[message.chat.id].status == 'start':
+        queries.beautiful('Brexit')
+        with open('image.png', 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
+
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
 
     if users[message.chat.id].status == 'new_docs':

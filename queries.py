@@ -5,7 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from bd import Topic, Article, Tag
 import peewee
-
+import wordcloud
 
 
 def make_plot(data, label, xlabel, ylabel, view):
@@ -162,3 +162,22 @@ def describe_topic(topic_name, file_name):
         return articles_amount, aver, file_name1, file_name2, file_name3
     except:
         return None, None, None, None, None
+
+
+def beautiful(topic_name):
+    words = Tag.select() \
+        .join(Article, on=(Article.name == Tag.article)) \
+        .where(Article.topic == topic) \
+        .group_by(Tag.name) \
+        .order_by(-peewee.fn.count(Tag.name)) \
+        .limit(50)
+    text = ''
+    for word in words:
+        text += ' ' + word.name
+    word_cloud = wordcloud.WordCloud(max_words=200,
+                                     height=960,
+                                     width=960,
+                                     background_color='white').generate(text)
+
+    image = word_cloud.to_image()
+    image.save('image.png')
