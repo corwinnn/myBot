@@ -17,6 +17,7 @@ def make_plot(data, label, xlabel, ylabel, view):
     plot.set_ylabel(ylabel)
     return plot
 
+
 def new_docs(n):
     articles = Article.select()\
         .order_by(-Article.upd)\

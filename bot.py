@@ -90,18 +90,25 @@ def get_message(message):
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
     if users[message.chat.id].status == 'new_docs':
         user_text = message.text
-        number = int(user_text)
-        articles = queries.new_docs(number)
-        for a in articles:
-            bot.send_message(message.chat.id, a.name + '\n' + a.href)
-        users[message.chat.id].status = 'start'
+        if user_text.isdigit():
+            number = int(user_text)
+            articles = queries.new_docs(number)
+            for a in articles:
+                bot.send_message(message.chat.id, a.name + '\n' + a.href)
+            users[message.chat.id].status = 'start'
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
+
     if users[message.chat.id].status == 'new_topics':
         user_text = message.text
-        number = int(user_text)
-        topics = queries.new_topics(number)
-        for t in topics:
-            bot.send_message(message.chat.id, t.name + '\n' +  t.href)
-        users[message.chat.id].status = 'start'
+        if user_text.isdigit():
+            number = int(user_text)
+            topics = queries.new_topics(number)
+            for t in topics:
+                bot.send_message(message.chat.id, t.name + '\n' +  t.href)
+            users[message.chat.id].status = 'start'
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
     if users[message.chat.id].status == 'topic':
         user_text = message.text
         desc, art = queries.topic(user_text)
