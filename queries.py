@@ -33,17 +33,23 @@ def new_topics(n):
 
 
 def topic(topic_name):
-    desc = Topic.get(Topic.name == topic_name).description
-    articles = Article.select()\
-        .where(Article.topic == topic_name)\
-        .order_by(-Article.upd)\
-        .limit(5)
-    return desc, articles
+    try:
+        desc = Topic.get(Topic.name == topic_name).description
+        articles = Article.select()\
+            .where(Article.topic == topic_name)\
+            .order_by(-Article.upd)\
+            .limit(5)
+        return desc,
+    except:
+        return None, None
 
 
 def doc(doc_title):
-    text = Article.get(Article.name == doc_title).text
-    return text
+    try:
+        text = Article.get(Article.name == doc_title).text
+        return text
+    except:
+        return None, None
 
 
 def words(topic):

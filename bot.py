@@ -86,8 +86,10 @@ def describe_topic(message):
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
+
     if users[message.chat.id].status == 'start':
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
+
     if users[message.chat.id].status == 'new_docs':
         user_text = message.text
         if user_text.isdigit():
@@ -109,24 +111,34 @@ def get_message(message):
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
+
     if users[message.chat.id].status == 'topic':
         user_text = message.text
         desc, art = queries.topic(user_text)
-        bot.send_message(message.chat.id, desc)
-        for a in art:
-            bot.send_message(message.chat.id, a.name + '\n' + a.href)
-        users[message.chat.id].status = 'start'
+        if desc is not None:
+            bot.send_message(message.chat.id, desc)
+            for a in art:
+                bot.send_message(message.chat.id, a.name + '\n' + a.href)
+            users[message.chat.id].status = 'start'
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
+
     if users[message.chat.id].status == 'doc':
         user_text = message.text
         text = queries.doc(user_text)
-        bot.send_message(message.chat.id, text)
-        users[message.chat.id].status = 'start'
+        if text is not None:
+            bot.send_message(message.chat.id, text)
+            users[message.chat.id].status = 'start'
+    else:
+        bot.send_message(message.chat.id, 'Try again, please.')
+
     if users[message.chat.id].status == 'words':
         user_text = message.text
         words = queries.words(user_text)
         for word in words:
             bot.send_message(message.chat.id, word.name)
         users[message.chat.id].status = 'start'
+
     if users[message.chat.id].status == 'describe_doc':
         user_text = message.text
         files = queries.describe_doc(user_text, 'doc' + str(message.chat.id))
@@ -137,6 +149,7 @@ def get_message(message):
         with open(files[2], 'rb') as plot1:
             bot.send_photo(message.chat.id, plot1)
         users[message.chat.id].status = 'start'
+
     if users[message.chat.id].status == 'describe_topic':
         user_text = message.text
         files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
