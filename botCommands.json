@@ -1,7 +1,7 @@
 {
   "commands": {
     "/start": "Hello, I'm Telegram bot for news!",
-    "/help": "help - list of commands\nstart - starts bot\nstop - stops current command\nnew_docs - send last articles to you\nnew_topics - send last topics to you\ntopic - send the description of given topic\ndoc - send a text of given article \nwords - main words about given topic\ndescribe_doc - statistics about given article\ndescribe_topic - statistics about given topic",
+    "/help": "/help - list of commands\n/start - starts bot\n/stop - stops current command\n/new_docs - send last articles to you\n/new_topics - send last topics to you\n/topic - send the description of given topic\n/doc - send a text of given article \n/words - main words about given topic\n/describe_doc - statistics about given article\n/describe_topic - statistics about given topic",
     "/stop": "I've stopped"
   }
 }
