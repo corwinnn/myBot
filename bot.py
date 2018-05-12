@@ -113,7 +113,7 @@ def get_message(message):
         users[message.chat.id].status = 'start'
     if users[message.chat.id].status == 'describe_doc':
         user_text = message.text
-        files = queries.describe_doc(user_text, str(message.chat.id))
+        files = queries.describe_doc(user_text, str(5))
         bot.send_photo(message.chat.id, files[0])
         bot.send_photo(message.chat.id, files[1])
         bot.send_photo(message.chat.id, files[2])
