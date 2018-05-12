@@ -1,8 +1,10 @@
 import pandas as pd
 import json
+import matplotlib
 import matplotlib.pyplot as plt
 from bd import Topic, Article, Tag
 import peewee
+matplotlib.use('GTK')
 
 
 def make_plot(data, label, xlabel, ylabel, view):
