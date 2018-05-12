@@ -75,26 +75,26 @@ def describe_doc(doc_name, file_name):
     file_name2 = file_name + '2.png'
     file_name3 = file_name + '3.png'
     make_plot(data=kol_with_len,
-              label="Распределение длины слов в документе",
-              xlabel='Длина слова',
-              ylabel='Количество слов с такой длиной',
+              label="distribution of the word length",
+              xlabel='word\'s length',
+              ylabel='Number of words with this length',
               view="bar"
               )
     plt.savefig(file_name1)
     plt.close()
     make_plot(data=kol_freq,
-              label="Распределение разных слов в документе",
-              xlabel='Разные слова',
-              ylabel='Количество таких слов',
+              label="distribution of the different words",
+              xlabel='different words',
+              ylabel='Number of these words',
               view="line"
               )
 
     plt.savefig(file_name2)
     plt.close()
     make_plot(data=sent_len,
-              label="Распределение количества слов в предложениях",
-              xlabel='Предложения',
-              ylabel='Количество слов',
+              label="distribution of the number words in sentence",
+              xlabel='sentences',
+              ylabel='Number of words',
               view="line"
               )
 
@@ -123,26 +123,26 @@ def describe_topic(topic_name, file_name):
     file_name2 = file_name + '2.png'
     file_name3 = file_name + '3.png'
     make_plot(data=kol_with_len,
-              label="Распределение длины слов в теме",
-              xlabel='Длина слова',
-              ylabel='Количество слов с такой длиной',
+              label="distribution of the word length",
+              xlabel='word\'s length',
+              ylabel='Number of words with this length',
               view="bar"
               )
     plt.savefig(file_name1)
     plt.close()
     make_plot(data=kol_freq,
-              label="Распределение разных слов в теме",
-              xlabel='Разные слова',
-              ylabel='Количество таких слов',
+              label="distribution of the different words",
+              xlabel='different words',
+              ylabel='Number of these words',
               view="line"
               )
 
     plt.savefig(file_name2)
     plt.close()
     make_plot(data=articles_len,
-              label="Распределение количества слов в статьях",
-              xlabel='Статьи',
-              ylabel='Количество слов',
+              label="distribution of the number words in articles",
+              xlabel='Articles',
+              ylabel='Number of words',
               view="line"
               )
 
