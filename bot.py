@@ -117,9 +117,10 @@ def get_message(message):
         files = queries.describe_doc(user_text, str(5))
         with open(files[0], 'rb') as plot1:
             bot.send_photo(message.chat.id, plot1)
-        '''bot.send_photo(message.chat.id, files[0])
-        bot.send_photo(message.chat.id, files[1])
-        bot.send_photo(message.chat.id, files[2])'''
+        with open(files[1], 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
+        with open(files[2], 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
         users[message.chat.id].status = 'start'
 
 
