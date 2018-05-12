@@ -129,8 +129,8 @@ def get_message(message):
         if text is not None:
             bot.send_message(message.chat.id, text)
             users[message.chat.id].status = 'start'
-    else:
-        bot.send_message(message.chat.id, 'Try again, please.')
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
 
     if users[message.chat.id].status == 'words':
         user_text = message.text
