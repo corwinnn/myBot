@@ -3,7 +3,6 @@ import re
 import queries
 import config
 import telebot
-import stop_words
 from User import User
 
 

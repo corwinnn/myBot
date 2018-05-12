@@ -5,6 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from bd import Topic, Article, Tag
 import peewee
+import stop_words
 import wordcloud
 
 
