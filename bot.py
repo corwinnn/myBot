@@ -183,7 +183,7 @@ def get_message(message):
 
     if users[message.chat.id].status == 'beautiful_topic':
         user_text = message.text
-        isBeautifuled = queries.describe_topic(user_text, 'awesome' + str(message.chat.id) + '.png')
+        isBeautifuled = queries.beautiful(user_text, 'awesome' + str(message.chat.id) + '.png')
         if isBeautifuled:
             with open('awesome' + str(message.chat.id) + '.png', 'rb') as btf:
                 bot.send_photo(message.chat.id, btf)

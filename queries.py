@@ -166,15 +166,15 @@ def describe_topic(topic_name, file_name):
 
 
 def beautiful(topic_name, file_name):
-    words = Tag.select() \
+    tags = Tag.select() \
         .join(Article, on=(Article.name == Tag.article)) \
         .where(Article.topic == topic_name) \
         .group_by(Tag.name) \
         .order_by(-peewee.fn.count(Tag.name)) \
         .limit(100)
-    if len(words) == 0:
+    if len(tags) == 0:
         return False
-    text = ' '.join(word.name for word in words)
+    text = ' '.join(word.name for word in tags)
     stopwords = set(stop_words.get_stop_words('ru'))
     word_cloud = wordcloud.WordCloud(max_words=50,
                                      height=800,
