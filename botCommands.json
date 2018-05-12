@@ -1,7 +1,7 @@
 {
   "commands": {
     "/start": "Hello, I'm Telegram bot for news!",
-    "/help": "/start - start me. \n/stop - stops me.\n/get_titles shows last topics. Just send how many you want or 'all'\n/get_articles_from_title - shows last articles from choosen topic. Just send number from which topic you want to grt the, and after it how many.",
+    "/help": "help - list of commands\nstart - starts bot\nstop - stops current command\nnew_docs - send last articles to you\nnew_topics - send last topics to you\ntopic - send the description of given topic\ndoc - send a text of given article \nwords - main words about given topic\ndescribe_doc - statistics about given article\ndescribe_topic - statistics about given topic",
     "/stop": "I've stopped"
   }
 }

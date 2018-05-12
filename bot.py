@@ -34,21 +34,60 @@ def new_docs(message):
     bot.send_message(message.chat.id, 'How many?')
 
 
+@bot.message_handler(commands=['new_docs'])
+def new_docs(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'new_docs'
+    bot.send_message(message.chat.id, 'How many?')
+
+
+@bot.message_handler(commands=['new_topics'])
+def new_docs(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'new_topics'
+    bot.send_message(message.chat.id, 'How many?')
+
+
+@bot.message_handler(commands=['topic'])
+def new_docs(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'topic'
+    bot.send_message(message.chat.id, 'Which topic?')
+
+
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
     if users[message.chat.id].status == 'start':
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
     if users[message.chat.id].status == 'new_docs':
-        s = message.text
-        number = int(s)
+        user_text = message.text
+        number = int(user_text)
         print(number, type(number))
         articles = queries.new_docs(number)
-        print('oe')
         print(len(articles))
         for a in articles:
             bot.send_message(message.chat.id, a.name, a.href)
         users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'new_topics':
+        user_text = message.text
+        number = int(user_text)
+        topics = queries.new_topics(number)
+        for t in topics:
+            bot.send_message(message.chat.id, t.name + '\n' +  t.href)
+        users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'topic':
+        user_text = message.text
+        desc, art = queries.topic(user_text)
+        bot.send_message(message.chat.id, desc)
+        for a in art:
+            bot.send_message(message.chat.id, a.name + '\n' + a.href)
+        users[message.chat.id].status = 'start'
+
+
 
 
 
