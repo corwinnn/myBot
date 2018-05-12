@@ -39,7 +39,7 @@ def topic(topic_name):
             .where(Article.topic == topic_name)\
             .order_by(-Article.upd)\
             .limit(5)
-        return desc,
+        return desc, articles
     except:
         return None, None
 
