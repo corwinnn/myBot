@@ -39,7 +39,7 @@ def new_docs(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'new_docs'
-    bot.send_message(message.chat.id, 'How many?')
+    bot.send_message(message.chat.id, 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['new_topics'])
@@ -47,7 +47,7 @@ def new_docs(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'new_topics'
-    bot.send_message(message.chat.id, 'How many?')
+    bot.send_message(message.chat.id, 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['topic'])
@@ -55,7 +55,23 @@ def new_docs(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = 'topic'
-    bot.send_message(message.chat.id, 'Which topic?')
+    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+
+
+@bot.message_handler(commands=['doc'])
+def new_docs(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'doc'
+    bot.send_message(message.chat.id, 'Which article? Send me a name.')
+
+
+@bot.message_handler(commands=['words'])
+def new_docs(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'words'
+    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
 
 
 @bot.message_handler(content_types=['text'])
@@ -66,9 +82,7 @@ def get_message(message):
     if users[message.chat.id].status == 'new_docs':
         user_text = message.text
         number = int(user_text)
-        print(number, type(number))
         articles = queries.new_docs(number)
-        print(len(articles))
         for a in articles:
             bot.send_message(message.chat.id, a.name, a.href)
         users[message.chat.id].status = 'start'
@@ -86,6 +100,19 @@ def get_message(message):
         for a in art:
             bot.send_message(message.chat.id, a.name + '\n' + a.href)
         users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'doc':
+        user_text = message.text
+        text = queries.doc(user_text)
+        bot.send_message(message.chat.id, text)
+        users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'words':
+        user_text = message.text
+        words = queries.words(user_text)
+        for word in words:
+            bot.send_message(message.chat.id, word.name)
+        users[message.chat.id].status = 'start'
+
+
 
 
 
