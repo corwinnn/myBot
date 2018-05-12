@@ -90,8 +90,8 @@ def get_message(message):
 
     if users[message.chat.id].status == 'start':
         queries.beautiful('Атаки хакеров')
-        # with open('image.png', 'rb') as plot1:
-        #    bot.send_photo(message.chat.id, plot1)
+        with open('image.png', 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
 
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
 
