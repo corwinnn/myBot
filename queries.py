@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 import matplotlib
-matplotlib.use('GTK')
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from bd import Topic, Article, Tag
 import peewee
