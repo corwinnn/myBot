@@ -66,6 +66,14 @@ def words(message):
     bot.send_message(message.chat.id, 'Which topic? Send me a name.')
 
 
+@bot.message_handler(commands=['describe_doc'])
+def describe_doc(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'describe_doc'
+    bot.send_message(message.chat.id, 'Which article? Send me a name.')
+
+
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
@@ -103,6 +111,16 @@ def get_message(message):
         for word in words:
             bot.send_message(message.chat.id, word.name)
         users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'describe_doc':
+        user_text = message.text
+        files = queries.describe_doc(user_text, str(message.chat.id))
+        bot.send_photo(message.chat.id, files[0])
+        bot.send_photo(message.chat.id, files[1])
+        bot.send_photo(message.chat.id, files[2])
+        users[message.chat.id].status = 'start'
+
+
+
 
 
 
