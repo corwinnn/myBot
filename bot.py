@@ -75,6 +75,14 @@ def describe_doc(message):
     bot.send_message(message.chat.id, 'Which article? Send me a name.')
 
 
+@bot.message_handler(commands=['describe_topic'])
+def describe_topic(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'describe_topic'
+    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+
+
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
@@ -114,7 +122,17 @@ def get_message(message):
         users[message.chat.id].status = 'start'
     if users[message.chat.id].status == 'describe_doc':
         user_text = message.text
-        files = queries.describe_doc(user_text, str(5))
+        files = queries.describe_doc(user_text, 'doc' + str(message.chat.id))
+        with open(files[0], 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
+        with open(files[1], 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
+        with open(files[2], 'rb') as plot1:
+            bot.send_photo(message.chat.id, plot1)
+        users[message.chat.id].status = 'start'
+    if users[message.chat.id].status == 'describe_topic':
+        user_text = message.text
+        files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
         with open(files[0], 'rb') as plot1:
             bot.send_photo(message.chat.id, plot1)
         with open(files[1], 'rb') as plot1:
