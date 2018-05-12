@@ -165,15 +165,16 @@ def describe_topic(topic_name, file_name):
         return None, None, None, None, None
 
 
-def beautiful(topic_name):
+def beautiful(topic_name, file_name):
     words = Tag.select() \
         .join(Article, on=(Article.name == Tag.article)) \
         .where(Article.topic == topic_name) \
         .group_by(Tag.name) \
         .order_by(-peewee.fn.count(Tag.name)) \
-        .limit(50)
+        .limit(100)
+    if len(words) == 0:
+        return False
     text = ' '.join(word.name for word in words)
-    print(text)
     stopwords = set(stop_words.get_stop_words('ru'))
     word_cloud = wordcloud.WordCloud(max_words=50,
                                      height=800,
@@ -182,4 +183,6 @@ def beautiful(topic_name):
                                      stopwords=stopwords).generate(text)
 
     image = word_cloud.to_image()
-    image.save('image.png')
+    image.save(file_name)
+    return True
+

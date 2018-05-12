@@ -83,16 +83,20 @@ def describe_topic(message):
     bot.send_message(message.chat.id, 'Which topic? Send me a name.')
 
 
+@bot.message_handler(commands=['beautiful_topic'])
+def beautiful_topic(message):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = 'beautiful_topic'
+    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+
+
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
 
     if users[message.chat.id].status == 'start':
-        queries.beautiful('Атаки хакеров')
-        with open('image.png', 'rb') as plot1:
-            bot.send_photo(message.chat.id, plot1)
-
         bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
 
     if users[message.chat.id].status == 'new_docs':
@@ -153,10 +157,10 @@ def get_message(message):
         if files[0] is not None:
             with open(files[0], 'rb') as plot1:
                 bot.send_photo(message.chat.id, plot1)
-            with open(files[1], 'rb') as plot1:
-                bot.send_photo(message.chat.id, plot1)
-            with open(files[2], 'rb') as plot1:
-                bot.send_photo(message.chat.id, plot1)
+            with open(files[1], 'rb') as plot2:
+                bot.send_photo(message.chat.id, plot2)
+            with open(files[2], 'rb') as plot3:
+                bot.send_photo(message.chat.id, plot3)
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
@@ -169,10 +173,20 @@ def get_message(message):
             bot.send_message(message.chat.id, str(files[0]) + ' articles' + '\n' + str(files[1]) +' words in the article on average')
             with open(files[2], 'rb') as plot1:
                 bot.send_photo(message.chat.id, plot1)
-            with open(files[3], 'rb') as plot1:
-                bot.send_photo(message.chat.id, plot1)
-            with open(files[4], 'rb') as plot1:
-                bot.send_photo(message.chat.id, plot1)
+            with open(files[3], 'rb') as plot2:
+                bot.send_photo(message.chat.id, plot2)
+            with open(files[4], 'rb') as plot3:
+                bot.send_photo(message.chat.id, plot3)
+            users[message.chat.id].status = 'start'
+        else:
+            bot.send_message(message.chat.id, 'Try again, please.')
+
+    if users[message.chat.id].status == 'beautiful_topic':
+        user_text = message.text
+        isBeautifuled = queries.describe_topic(user_text, 'awesome' + str(message.chat.id) + '.png')
+        if isBeautifuled:
+            with open('awesome' + str(message.chat.id) + '.png', 'rb') as btf:
+                bot.send_photo(message.chat.id, btf)
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
