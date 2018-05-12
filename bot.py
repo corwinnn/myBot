@@ -4,6 +4,8 @@ import queries
 import config
 import telebot
 from User import User
+import matplotlib
+matplotlib.use('GTK')
 
 
 users = dict()
