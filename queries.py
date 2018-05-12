@@ -49,7 +49,7 @@ def doc(doc_title):
         text = Article.get(Article.name == doc_title).text
         return text
     except:
-        return None, None
+        return None
 
 
 def words(topic):
