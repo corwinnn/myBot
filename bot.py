@@ -102,9 +102,10 @@ def get_message(message):
         user_text = message.text
         if user_text.isdigit():
             number = int(user_text)
-            articles = queries.new_docs(number)
-            for a in articles:
-                bot.send_message(message.chat.id, a.name + '\n' + a.href)
+            if number > 0:
+                articles = queries.new_docs(number)
+                for a in articles:
+                    bot.send_message(message.chat.id, a.name + '\n' + a.href)
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
@@ -113,9 +114,10 @@ def get_message(message):
         user_text = message.text
         if user_text.isdigit():
             number = int(user_text)
-            topics = queries.new_topics(number)
-            for t in topics:
-                bot.send_message(message.chat.id, t.name + '\n' + t.href)
+            if number > 0:
+                topics = queries.new_topics(number)
+                for t in topics:
+                    bot.send_message(message.chat.id, t.name + '\n' + t.href)
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
