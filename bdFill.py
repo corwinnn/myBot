@@ -27,7 +27,9 @@ for i in range(len(titles)):
         for word in words:
             article_words_freq[word] += 1
             article_words_len[int(len(word))] += 1
-        new_article = Article(topic=titles[i], name=a_titles[j], href=a_refs[j], text=article.get_paragraphs(),
+        new_article = Article(topic=titles[i], name=a_titles[j],
+                              href=a_refs[j],
+                              text=article.get_paragraphs(),
                               upd=dateparser.parse(times_articles[j].text),
                               stat_words_len=json.dumps(article_words_len),
                               stat_words_freq=json.dumps(article_words_freq))
@@ -41,7 +43,8 @@ for i in range(len(titles)):
         topic_words_freq[word] += 1
         topic_words_len[int(len(word))] += 1
     new_topic = Topic(name=titles[i], description=description[i], href=refs[i],
-                      upd=dateparser.parse(times_articles[0].text),stat_words_len=json.dumps(topic_words_len),
+                      upd=dateparser.parse(times_articles[0].text),
+                      stat_words_len=json.dumps(topic_words_len),
                       stat_words_freq=json.dumps(topic_words_freq))
     new_topic.save()
 db.close()

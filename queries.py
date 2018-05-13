@@ -119,7 +119,7 @@ def describe_topic(topic_name, file_name):
         topic = Topic.get(Topic.name == topic_name)
         topic_words_len = json.loads(topic.stat_words_len)
         topic_words_freq = json.loads(topic.stat_words_freq)
-        articles_amount= len(Article.select().where(Article.topic == topic.name))
+        articles_amount = len(Article.select().where(Article.topic == topic.name))
         articles_len = [len(art.text.split()) for art in Article.select().where(Article.topic == topic.name)]
         aver = sum(articles_len)/len(articles_len)
         keys = [int(x) for x in topic_words_len.keys()]

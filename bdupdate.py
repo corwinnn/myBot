@@ -35,7 +35,8 @@ while True:
                     for word in words:
                         article_words_freq[word] += 1
                         article_words_len[int(len(word))] += 1
-                    new_article = Article(topic=titles[i], name=a_titles[j], href=a_refs[j],
+                    new_article = Article(topic=titles[i], name=a_titles[j],
+                                          href=a_refs[j],
                                           text=article.get_paragraphs(),
                                           upd=dateparser.parse(times_articles[j].text),
                                           stat_words_len=json.dumps(article_words_len),
@@ -49,7 +50,8 @@ while True:
                 for word in words:
                     topic_words_freq[word] += 1
                     topic_words_len[int(len(word))] += 1
-                new_topic = Topic(name=titles[i], description=description[i], href=refs[i],
+                new_topic = Topic(name=titles[i], description=description[i],
+                                  href=refs[i],
                                   upd=dateparser.parse(times_articles[0].text),
                                   stat_words_len=json.dumps(topic_words_len),
                                   stat_words_freq=json.dumps(topic_words_freq))
@@ -75,7 +77,8 @@ while True:
                         for word in words:
                             article_words_freq[word] += 1
                             article_words_len[len(word)] += 1
-                        new_article = Article(topic=titles[i], name=a_titles[j], href=a_refs[j],
+                        new_article = Article(topic=titles[i], name=a_titles[j],
+                                              href=a_refs[j],
                                               text=article.get_paragraphs(),
                                               upd=dateparser.parse(times_articles[j].text),
                                               stat_words_len=json.dumps(article_words_len),
@@ -83,12 +86,14 @@ while True:
                         new_article.save()
                         tags = article.get_tags()
                         for k in tags:
-                            new_tag = Tag(name=k.text, article=a_titles[j], href=k['href'])
+                            new_tag = Tag(name=k.text, article=a_titles[j],
+                                          href=k['href'])
                             new_tag.save()
                     else:
                         break
                 if have_new:
-                    updated_articles = Article.select().where(Article.topic == cur_topic.name)
+                    updated_articles = Article.select()\
+                                              .where(Article.topic == cur_topic.name)
                     all_topic_text = ''
                     topic_words_len = defaultdict(int)
                     topic_words_freq = defaultdict(int)
@@ -106,6 +111,3 @@ while True:
         sleep(0)
     except:
         print('ups')
-
-
-

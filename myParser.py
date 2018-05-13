@@ -14,15 +14,17 @@ class Parser:
         self.data = BeautifulSoup(requests.get(self.site).text, 'lxml')
 
     def get_titles(self):
-        titles = re.findall(r'<span class="item__title">(.*?)</span>', self.html)
-        refs = re.findall(r'<a href="(h.*?)" class="item__link no-injects', self.html)
-        description = re.findall(r'<span class="item__text">(.*?)</span>', self.html, re.DOTALL)
+        titles = re.findall(r'<span class="item__title">(.*?)</span>',
+                            self.html)
+        refs = re.findall(r'<a href="(h.*?)" class="item__link no-injects',
+                          self.html)
+        description = re.findall(r'<span class="item__text">(.*?)</span>',
+                                 self.html, re.DOTALL)
         return titles, description, refs
 
     def get_time(self):
         time = self.data.find_all('span', {'class': "item__info"})
         return time
-
 
     def get_paragraphs(self):
         paragraphs = self.data.find_all('p')
@@ -34,6 +36,3 @@ class Parser:
     def get_tags(self):
         tags = self.data.find_all('a', {'class': "article__tags__link"})
         return tags
-
-
-

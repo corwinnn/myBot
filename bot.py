@@ -6,7 +6,6 @@ import telebot
 from User import User
 
 
-
 users = dict()
 bot = telebot.TeleBot(config.token)
 
@@ -116,7 +115,7 @@ def get_message(message):
             number = int(user_text)
             topics = queries.new_topics(number)
             for t in topics:
-                bot.send_message(message.chat.id, t.name + '\n' +  t.href)
+                bot.send_message(message.chat.id, t.name + '\n' + t.href)
             users[message.chat.id].status = 'start'
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
@@ -165,12 +164,11 @@ def get_message(message):
         else:
             bot.send_message(message.chat.id, 'Try again, please.')
 
-
     if users[message.chat.id].status == 'describe_topic':
         user_text = message.text
         files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
         if files[0] is not None:
-            bot.send_message(message.chat.id, str(files[0]) + ' articles' + '\n' + str(files[1]) +' words in the article on average')
+            bot.send_message(message.chat.id, str(files[0]) + ' articles' + '\n' + str(files[1]) + ' words in the article on average')
             with open(files[2], 'rb') as plot1:
                 bot.send_photo(message.chat.id, plot1)
             with open(files[3], 'rb') as plot2:
