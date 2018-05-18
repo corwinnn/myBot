@@ -28,8 +28,8 @@ def fill_words(text, words_freq, words_len):
     """
     Заполняет данные словари для статистики словами
     :param text: слова
-    :param words_freq: словарь для частот
-    :param words_len: словарь для длин
+    :param words_freq: словарь для сохранения частот
+    :param words_len: словарь для сохранения длин
     :return:
     """
     for word in text:
