@@ -4,9 +4,10 @@ import requests
 from myParser import Parser
 from bd import Topic, Article, Tag, db
 import dateparser
+import config
 session = requests.Session()
-session.max_redirects = 100
-my_site = Parser('https://www.rbc.ru/story/')
+session.max_redirects = config.MAX_REDIRECTS
+my_site = Parser(config.MY_SITE)
 titles, description, refs = my_site.get_titles()
 all_titles = set(titles)
 db.connect()
