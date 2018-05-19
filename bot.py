@@ -169,7 +169,7 @@ def get_message(message):
     if users[message.chat.id].status == 'describe_topic':
         user_text = message.text
         files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
-        img_files = files[3]
+        img_files = files[2]
         if files[0] is not None:
             bot.send_message(message.chat.id, str(files[0]) + ' articles' + '\n' + str(files[1]) + ' words in the article on average')
             with open(img_files[0], 'rb') as plot1:
