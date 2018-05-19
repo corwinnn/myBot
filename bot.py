@@ -48,22 +48,22 @@ def handle_start_help_stop(message):
 
 
 @bot.message_handler(commands=['new_docs'])
-def new_docs(message):
+def q_new_docs(message):
     get_info_from_user(message, 'new_docs', 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['new_topics'])
-def new_topics(message):
+def q_new_topics(message):
     get_info_from_user(message, 'new_topic', 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['topic'])
-def topic(message):
+def q_topic(message):
     get_info_from_user(message, 'topic', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['doc'])
-def doc(message):
+def q_doc(message):
     get_info_from_user(message, 'doc', 'Which article? Send me a name.')
 
 
@@ -73,17 +73,17 @@ def words(message):
 
 
 @bot.message_handler(commands=['describe_doc'])
-def describe_doc(message):
+def q_describe_doc(message):
     get_info_from_user(message, 'describe_doc', 'Which article? Send me a name.')
 
 
 @bot.message_handler(commands=['describe_topic'])
-def describe_topic(message):
+def q_describe_topic(message):
     get_info_from_user(message, 'describe_doc', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['beautiful_topic'])
-def beautiful_topic(message):
+def q_beautiful_topic(message):
     get_info_from_user(message, 'beautiful_topic', 'Which topic? Send me a name.')
 
 
