@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import pandas as pd
 import json
 import matplotlib
@@ -118,11 +120,15 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               )
     plt.savefig(file_name1)
     plt.close()
-    make_plot(data=data_freq,
+    freq = defaultdict(int)
+    for value in data_freq:
+        freq[value] += 1
+    end_data = [freq[i] for i in range(max(freq.keys()))]
+    make_plot(data=end_data,
               label="distribution of the different words",
               xlabel='different words',
               ylabel='Number of these words',
-              view="bar"
+              view="line"
               )
 
     plt.savefig(file_name2)
