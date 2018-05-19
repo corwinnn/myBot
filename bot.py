@@ -37,7 +37,8 @@ def new_docs(message):
     else:
         bot.send_message(message.chat.id, 'Try again, please.')
 
-commands['new_docs'] = new_docs()
+
+commands['new_docs'] = new_docs
 
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
@@ -97,7 +98,6 @@ def get_message(message):
 
     if users[message.chat.id].status == 'new_docs':
         commands['new_docs'](message)
-
 
     if users[message.chat.id].status == 'new_topics':
         user_text = message.text
