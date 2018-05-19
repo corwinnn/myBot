@@ -5,8 +5,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from bd import Topic, Article, Tag
 import peewee
-import stop_words
-import wordcloud
+# import stop_words
+# import wordcloud
 import config
 
 
@@ -190,7 +190,8 @@ def describe_topic(topic_name, file_name):
             else:
                 kol_with_len[i] = 0
         kol_freq = sorted(topic_words_freq.values())
-        return articles_amount, aver, make_plots(file_name, kol_with_len, kol_freq, articles_len, 'articles')
+        files = make_plots(file_name, kol_with_len, kol_freq, articles_len, 'articles')
+        return articles_amount, aver, files
     except:
         return None, None, None, None, None
 

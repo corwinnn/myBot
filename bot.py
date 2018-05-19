@@ -169,13 +169,14 @@ def get_message(message):
     if users[message.chat.id].status == 'describe_topic':
         user_text = message.text
         files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
+        img_files = files[3]
         if files[0] is not None:
             bot.send_message(message.chat.id, str(files[0]) + ' articles' + '\n' + str(files[1]) + ' words in the article on average')
-            with open(files[2], 'rb') as plot1:
+            with open(img_files[0], 'rb') as plot1:
                 bot.send_photo(message.chat.id, plot1)
-            with open(files[3], 'rb') as plot2:
+            with open(img_files[1], 'rb') as plot2:
                 bot.send_photo(message.chat.id, plot2)
-            with open(files[4], 'rb') as plot3:
+            with open(img_files[2], 'rb') as plot3:
                 bot.send_photo(message.chat.id, plot3)
             users[message.chat.id].status = 'start'
         else:
