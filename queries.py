@@ -13,7 +13,7 @@ import config
 def make_plot(data, label, xlabel, ylabel, view):
     '''
     Строит график
-    :param data: данные
+    :param data: наши данные
     :param label: подпись
     :param xlabel: ось х
     :param ylabel: ось у
