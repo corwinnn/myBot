@@ -54,7 +54,7 @@ def q_new_docs(message):
 
 @bot.message_handler(commands=['new_topics'])
 def q_new_topics(message):
-    get_info_from_user(message, 'new_topic', 'How many? Send me the number.')
+    get_info_from_user(message, 'new_topics', 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['topic'])
