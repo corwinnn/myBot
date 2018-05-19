@@ -226,6 +226,10 @@ def beautiful_topic(message):
 
 
 def guess(message):
+    """
+    выдает предполагаемую тему
+    :param message: сообщение
+    """
     user_text = message.text
     name = queries.guess(user_text)
     bot.send_message(message.chat.id, name)

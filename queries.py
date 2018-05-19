@@ -231,6 +231,11 @@ def beautiful(topic_name, file_name):
 
 
 def guess(text):
+    """
+    По данному тексту находит предполагаемую статью
+    :param text: текст
+    :return: название темы
+    """
     words = text.split()
     name_of_topic = 'I don\'t know'
     cur_grade = 0
