@@ -79,7 +79,7 @@ def q_describe_doc(message):
 
 @bot.message_handler(commands=['describe_topic'])
 def q_describe_topic(message):
-    get_info_from_user(message, 'describe_doc', 'Which topic? Send me a name.')
+    get_info_from_user(message, 'describe_topic', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['beautiful_topic'])
