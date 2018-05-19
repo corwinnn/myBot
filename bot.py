@@ -199,8 +199,6 @@ def describe_topic(message):
                          str(files[0]) + ' articles' + '\n' + str(files[1]) + ' words in the article on average')
         with open(img_files[0], 'rb') as plot1:
             bot.send_photo(message.chat.id, plot1)
-        with open(img_files[1], 'rb') as plot2:
-            bot.send_photo(message.chat.id, plot2)
         with open(img_files[2], 'rb') as plot3:
             bot.send_photo(message.chat.id, plot3)
         users[message.chat.id].status = 'start'
