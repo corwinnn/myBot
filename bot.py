@@ -18,6 +18,13 @@ def setUser(id):
         users[id] = User(id)
 
 
+def get_info_from_user(message, status, answer):
+    setUser(message.chat.id)
+    print(message.text, message.chat.first_name, message.chat.last_name)
+    users[message.chat.id].status = status
+    bot.send_message(message.chat.id, answer)
+
+
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
     setUser(message.chat.id)
@@ -28,66 +35,42 @@ def handle_start_help_stop(message):
 
 @bot.message_handler(commands=['new_docs'])
 def new_docs(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'new_docs'
-    bot.send_message(message.chat.id, 'How many? Send me the number.')
+    get_info_from_user(message, 'new_docs', 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['new_topics'])
 def new_topics(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'new_topics'
-    bot.send_message(message.chat.id, 'How many? Send me the number.')
+    get_info_from_user(message, 'new_topic', 'How many? Send me the number.')
 
 
 @bot.message_handler(commands=['topic'])
 def topic(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'topic'
-    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+    get_info_from_user(message, 'topic', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['doc'])
 def doc(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'doc'
-    bot.send_message(message.chat.id, 'Which article? Send me a name.')
+    get_info_from_user(message, 'doc', 'Which article? Send me a name.')
 
 
 @bot.message_handler(commands=['words'])
 def words(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'words'
-    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+    get_info_from_user(message, 'words', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['describe_doc'])
 def describe_doc(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'describe_doc'
-    bot.send_message(message.chat.id, 'Which article? Send me a name.')
+    get_info_from_user(message, 'describe_doc', 'Which article? Send me a name.')
 
 
 @bot.message_handler(commands=['describe_topic'])
 def describe_topic(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'describe_topic'
-    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+    get_info_from_user(message, 'describe_doc', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(commands=['beautiful_topic'])
 def beautiful_topic(message):
-    setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
-    users[message.chat.id].status = 'beautiful_topic'
-    bot.send_message(message.chat.id, 'Which topic? Send me a name.')
+    get_info_from_user(message, 'beautiful_topic', 'Which topic? Send me a name.')
 
 
 @bot.message_handler(content_types=['text'])
