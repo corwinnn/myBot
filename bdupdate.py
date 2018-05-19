@@ -11,11 +11,13 @@ import dateparser
 session = requests.Session()
 session.max_redirects = config.MAX_REDIRECTS
 
+
 def update_topic_stat(topic, articles):
     """
     Обновляет статистику данной темы, по новым статьям
     :param topic: Тема
     :param articles: новые статьи
+    :return данные для статистики
     """
     all_topic_text = ''
     topic_words_len = defaultdict(int)
@@ -23,9 +25,7 @@ def update_topic_stat(topic, articles):
     for article in articles:
         all_topic_text += ' ' + article.text
     fill_words(all_topic_text.split(), topic_words_freq, topic_words_len)
-    topic.stat_words_len = json.dumps(topic_words_len)
-    topic.stat_words_freq = json.dumps(topic_words_freq)
-    topic.save()
+    return json.dumps(topic_words_len), json.dumps(topic_words_freq)
 
 while True:
     try:
@@ -65,7 +65,8 @@ while True:
                 if have_new:
                     updated_articles = Article.select()\
                                               .where(Article.topic == cur_topic.name)
-                    update_topic_stat(cur_topic, updated_articles)
+                    cur_topic.stat_words_len, cur_topic.stat_words_freq = update_topic_stat(cur_topic, updated_articles)
+                    cur_topic.save()
 
         db.close()
         print('done')
