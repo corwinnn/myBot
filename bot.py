@@ -113,7 +113,7 @@ def topic(message):
             bot.send_message(message.chat.id, a.name + '\n' + a.href)
         users[message.chat.id].status = 'start'
     else:
-        bot.send_message(message.chat.id, 'Try again, please.')
+        bot.send_message(message.chat.id, 'Try again, please. ')
 
 
 def doc(message):
