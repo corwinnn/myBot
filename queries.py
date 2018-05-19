@@ -122,7 +122,7 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               label="distribution of the different words",
               xlabel='different words',
               ylabel='Number of these words',
-              view="line"
+              view="bar"
               )
 
     plt.savefig(file_name2)
@@ -131,7 +131,7 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               label="distribution of the number words in " + part_type,
               xlabel='sentences',
               ylabel='Number of words',
-              view="line"
+              view="bar"
               )
 
     plt.savefig(file_name3)

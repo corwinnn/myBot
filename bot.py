@@ -15,11 +15,21 @@ with open('botCommands.json') as bot_activity_file:
 
 
 def setUser(id):
+    '''
+    Добавляет нового юзера в словарь
+    :param id: его id
+    '''
     if id not in users:
         users[id] = User(id)
 
 
 def get_info_from_user(message, status, answer):
+    '''
+    шаблон ответа пользователю
+    :param message: его сообщенние
+    :param status: его новый статус
+    :param answer: ответ
+    '''
     setUser(message.chat.id)
     print(message.text, message.chat.first_name, message.chat.last_name)
     users[message.chat.id].status = status
@@ -27,6 +37,10 @@ def get_info_from_user(message, status, answer):
 
 
 def new_docs(message):
+    '''
+    присылает последние документы
+    :param message: сообщение
+    '''
     user_text = message.text
     if user_text.isdigit():
         number = int(user_text)
@@ -92,6 +106,10 @@ def start(message):
 
 
 def new_topics(message):
+    '''
+    присылает последние темы
+    :param message: сообщение
+    '''
     user_text = message.text
     if user_text.isdigit():
         number = int(user_text)
@@ -105,6 +123,10 @@ def new_topics(message):
 
 
 def topic(message):
+    '''
+    присылает описание темы
+    :param message: сообщение
+    '''
     user_text = message.text
     desc, art = queries.topic(user_text)
     if desc is not None:
@@ -117,6 +139,10 @@ def topic(message):
 
 
 def doc(message):
+    '''
+    присылает текст документа
+    :param message: сообщение
+    '''
     user_text = message.text
     text = queries.doc(user_text)
     if text is not None:
@@ -127,6 +153,10 @@ def doc(message):
 
 
 def words(message):
+    '''
+    присылает главные слова темы
+    :param message: сообщение
+    '''
     user_text = message.text
     text = queries.words(user_text)
     if len(text) == 0:
@@ -138,6 +168,10 @@ def words(message):
 
 
 def describe_doc(message):
+    '''
+    присылает описание документа, статистику
+    :param message: сообщение
+    '''
     user_text = message.text
     files = queries.describe_doc(user_text, 'doc' + str(message.chat.id))
     if files[0] is not None:
@@ -153,6 +187,10 @@ def describe_doc(message):
 
 
 def describe_topic(message):
+    """
+    Присылает описание темы, статистику
+    :param message: сообщение
+    """
     user_text = message.text
     files = queries.describe_topic(user_text, 'top' + str(message.chat.id))
     img_files = files[2]
@@ -171,6 +209,10 @@ def describe_topic(message):
 
 
 def beautiful_topic(message):
+    """
+    Присылает главные слова темы в картинке
+    :param message: сообщение
+    """
     user_text = message.text
     isBeautifuled = queries.beautiful(user_text, 'awesome' + str(message.chat.id) + '.png')
     if isBeautifuled:
