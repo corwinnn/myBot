@@ -12,7 +12,6 @@ titles, description, refs = my_site.get_titles()
 all_titles = set(titles)
 db.connect()
 
-
 def make_tags(tags, title):
     """
     Заполняет таблицу с тегами.
@@ -73,9 +72,3 @@ def make_topic(ref, title, desc):
                       stat_words_len=json.dumps(topic_words_len),
                       stat_words_freq=json.dumps(topic_words_freq))
     new_topic.save()
-
-
-for index in range(len(titles)):
-    make_topic(refs[index], titles[index], description[index])
-
-db.close()

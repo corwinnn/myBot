@@ -7,9 +7,19 @@ from bd import Topic, Article, Tag
 import peewee
 import stop_words
 import wordcloud
+import config
 
 
 def make_plot(data, label, xlabel, ylabel, view):
+    '''
+    Строит график
+    :param data: данные
+    :param label: подпись
+    :param xlabel: ось х
+    :param ylabel: ось у
+    :param view: вид
+    :return: график
+    '''
     data_frame = pd.DataFrame(data)
     plot = data_frame.plot(kind=view,
                            title=label,
@@ -20,6 +30,10 @@ def make_plot(data, label, xlabel, ylabel, view):
 
 
 def new_docs(n):
+    '''
+    :param n: количество
+    :return: n последних статей
+    '''
     articles = Article.select()\
         .order_by(-Article.upd)\
         .limit(n)
@@ -27,6 +41,12 @@ def new_docs(n):
 
 
 def new_topics(n):
+    '''
+
+    :param n: количество
+    :return: n последних тем
+    '''
+
     topics = Topic.select()\
         .order_by(-Topic.upd)\
         .limit(n)
@@ -34,6 +54,11 @@ def new_topics(n):
 
 
 def topic(topic_name):
+    '''
+    описание темы
+    :param topic_name: название
+    :return: описание, последние статьи
+    '''
     try:
         desc = Topic.get(Topic.name == topic_name).description
         articles = Article.select()\
@@ -46,6 +71,10 @@ def topic(topic_name):
 
 
 def doc(doc_title):
+    '''
+    :param doc_title: название статьи
+    :return: текст
+    '''
     try:
         text = Article.get(Article.name == doc_title).text
         return text
@@ -54,6 +83,11 @@ def doc(doc_title):
 
 
 def words(topic):
+    """
+    5 самых важных слов
+    :param topic: название темы
+    :return: слова
+    """
     words = Tag.select()\
         .join(Article, on=(Article.name == Tag.article))\
         .where(Article.topic == topic)\
@@ -63,7 +97,55 @@ def words(topic):
     return words
 
 
+def make_plots(file_name, data_kol, data_freq, data_part, part_type):
+    """
+    Делает три графика для статистики тем ыили статьи
+    :param file_name: базовое название файла
+    :param data_kol: данные об длине/количестве
+    :param data_freq: данные о частоте
+    :param data_part: данные о чаастях объекта
+    :param part_type: название части
+    :return: названия 3х файлов
+    """
+    file_name1 = file_name + '1.png'
+    file_name2 = file_name + '2.png'
+    file_name3 = file_name + '3.png'
+    make_plot(data=data_kol,
+              label="distribution of the word length",
+              xlabel='word\'s length',
+              ylabel='Number of words with this length',
+              view="bar"
+              )
+    plt.savefig(file_name1)
+    plt.close()
+    make_plot(data=data_freq,
+              label="distribution of the different words",
+              xlabel='different words',
+              ylabel='Number of these words',
+              view="line"
+              )
+
+    plt.savefig(file_name2)
+    plt.close()
+    make_plot(data=data_part,
+              label="distribution of the number words in " + part_type,
+              xlabel='sentences',
+              ylabel='Number of words',
+              view="line"
+              )
+
+    plt.savefig(file_name3)
+    plt.close()
+    return file_name1, file_name2, file_name3
+
+
 def describe_doc(doc_name, file_name):
+    """
+    Cоздает описание файла, статистику
+    :param doc_name: имя статьи
+    :param file_name: базовое имя файлов с инфографикой
+    :return: названия 3х файлов с графиками
+    """
     try:
         article = Article.get(Article.name == doc_name)
         article_words_len = json.loads(article.stat_words_len)
@@ -80,41 +162,18 @@ def describe_doc(doc_name, file_name):
         sentences = article.text.split('.')
         sentences = sentences[:-1]
         sent_len = [len(sent.split()) for sent in sentences]
-        file_name1 = file_name + '1.png'
-        file_name2 = file_name + '2.png'
-        file_name3 = file_name + '3.png'
-        make_plot(data=kol_with_len,
-                  label="distribution of the word length",
-                  xlabel='word\'s length',
-                  ylabel='Number of words with this length',
-                  view="bar"
-                  )
-        plt.savefig(file_name1)
-        plt.close()
-        make_plot(data=kol_freq,
-                  label="distribution of the different words",
-                  xlabel='different words',
-                  ylabel='Number of these words',
-                  view="line"
-                  )
-
-        plt.savefig(file_name2)
-        plt.close()
-        make_plot(data=sent_len,
-                  label="distribution of the number words in sentence",
-                  xlabel='sentences',
-                  ylabel='Number of words',
-                  view="line"
-                  )
-
-        plt.savefig(file_name3)
-        plt.close()
-        return file_name1, file_name2, file_name3
+        return make_plots(file_name, kol_with_len, kol_freq, sent_len, 'sentence')
     except:
         return None, None, None
 
 
 def describe_topic(topic_name, file_name):
+    """
+    Cоздает описание темы, статистику
+    :param topic_name: название темы
+    :param file_name: имя базового файла
+    :return: количество статей, их среднюю длину и три графика
+    """
     try:
         topic = Topic.get(Topic.name == topic_name)
         topic_words_len = json.loads(topic.stat_words_len)
@@ -131,54 +190,31 @@ def describe_topic(topic_name, file_name):
             else:
                 kol_with_len[i] = 0
         kol_freq = sorted(topic_words_freq.values())
-        file_name1 = file_name + '1.png'
-        file_name2 = file_name + '2.png'
-        file_name3 = file_name + '3.png'
-        make_plot(data=kol_with_len,
-                  label="distribution of the word length",
-                  xlabel='word\'s length',
-                  ylabel='Number of words with this length',
-                  view="bar"
-                  )
-        plt.savefig(file_name1)
-        plt.close()
-        make_plot(data=kol_freq,
-                  label="distribution of the different words",
-                  xlabel='different words',
-                  ylabel='Number of these words',
-                  view="line"
-                  )
-
-        plt.savefig(file_name2)
-        plt.close()
-        make_plot(data=articles_len,
-                  label="distribution of the number words in articles",
-                  xlabel='Articles',
-                  ylabel='Number of words',
-                  view="line"
-                  )
-
-        plt.savefig(file_name3)
-        plt.close()
-        return articles_amount, aver, file_name1, file_name2, file_name3
+        return articles_amount, aver, make_plots(file_name, kol_with_len, kol_freq, articles_len, 'articles')
     except:
         return None, None, None, None, None
 
 
 def beautiful(topic_name, file_name):
+    """
+    Делает красивую картинку из главныз слов темы
+    :param topic_name: название темы
+    :param file_name: название выходного файла
+    :return: True или False, в зависимости от того, получилось ли сделать картинку
+    """
     tags = Tag.select() \
         .join(Article, on=(Article.name == Tag.article)) \
         .where(Article.topic == topic_name) \
         .group_by(Tag.name) \
         .order_by(-peewee.fn.count(Tag.name)) \
-        .limit(100)
+        .limit(config.WORDS_IN_WORDCLOUD)
     if len(tags) == 0:
         return False
     text = ' '.join(word.name for word in tags)
     stopwords = set(stop_words.get_stop_words('ru'))
-    word_cloud = wordcloud.WordCloud(max_words=50,
-                                     height=800,
-                                     width=800,
+    word_cloud = wordcloud.WordCloud(max_words=config.WORDS_IN_WORDCLOUD,
+                                     height=config.WORDCLOUD_HEIGHT,
+                                     width=config.WORDCLOUD_WIDTH,
                                      background_color='white',
                                      stopwords=stopwords).generate(text)
 

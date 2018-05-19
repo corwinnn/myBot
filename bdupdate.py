@@ -6,7 +6,7 @@ import requests
 import config
 from myParser import Parser
 from bd import Topic, Article, Tag, db
-from bdFill import make_topic, titles, description, refs, fill_words, make_tags
+from bdconfig import make_topic, titles, description, refs, fill_words, make_tags
 import dateparser
 session = requests.Session()
 session.max_redirects = config.MAX_REDIRECTS
@@ -26,8 +26,6 @@ def update_topic_stat(topic, articles):
     topic.stat_words_len = json.dumps(topic_words_len)
     topic.stat_words_freq = json.dumps(topic_words_freq)
     topic.save()
-
-
 
 while True:
     try:
