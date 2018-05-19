@@ -8,6 +8,7 @@ from User import User
 
 users = dict()
 bot = telebot.TeleBot(config.token)
+commands = dict()
 
 with open('botCommands.json') as bot_activity_file:
     bot_activity = json.loads(bot_activity_file.read())
@@ -24,6 +25,19 @@ def get_info_from_user(message, status, answer):
     users[message.chat.id].status = status
     bot.send_message(message.chat.id, answer)
 
+def new_docs(message):
+    user_text = message.text
+    if user_text.isdigit():
+        number = int(user_text)
+        if number > 0:
+            articles = queries.new_docs(number)
+            for a in articles:
+                bot.send_message(message.chat.id, a.name + '\n' + a.href)
+        users[message.chat.id].status = 'start'
+    else:
+        bot.send_message(message.chat.id, 'Try again, please.')
+
+commands['new_docs'] = new_docs()
 
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
@@ -79,19 +93,11 @@ def get_message(message):
     print(message.text, message.chat.first_name, message.chat.last_name)
 
     if users[message.chat.id].status == 'start':
-        bot.send_message(message.chat.id, 'What do you want? Use commands, please.')
+        bot.send_message(message.chat.id, 'Use commands, please.')
 
     if users[message.chat.id].status == 'new_docs':
-        user_text = message.text
-        if user_text.isdigit():
-            number = int(user_text)
-            if number > 0:
-                articles = queries.new_docs(number)
-                for a in articles:
-                    bot.send_message(message.chat.id, a.name + '\n' + a.href)
-            users[message.chat.id].status = 'start'
-        else:
-            bot.send_message(message.chat.id, 'Try again, please.')
+        commands['new_docs'](message)
+
 
     if users[message.chat.id].status == 'new_topics':
         user_text = message.text
