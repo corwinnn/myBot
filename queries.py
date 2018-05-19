@@ -229,3 +229,22 @@ def beautiful(topic_name, file_name):
     image.save(file_name)
     return True
 
+
+def guess(text):
+    words = text.split()
+    name_of_topic = 'I don\'t know'
+    cur_grade = 0
+    topics = Topic.select()
+    for topic in topics:
+        grade = 0
+        topic_words = json.loads(topic.stat_words_freq)
+        for word in words:
+            if word in topic_words:
+                grade += 1/topic_words[word]
+        if grade > cur_grade:
+            cur_grade = grade
+            name_of_topic = topic.name
+    return name_of_topic
+
+
+

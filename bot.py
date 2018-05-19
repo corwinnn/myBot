@@ -100,6 +100,10 @@ def q_describe_topic(message):
 def q_beautiful_topic(message):
     get_info_from_user(message, 'beautiful_topic', 'Which topic? Send me a name.')
 
+@bot.message_handler(commands=['guess'])
+def q_guess(message):
+    get_info_from_user(message, 'guess', 'Send me a text.')
+
 
 def start(message):
     bot.send_message(message.chat.id, 'Use commands, please.')
@@ -221,6 +225,13 @@ def beautiful_topic(message):
         bot.send_message(message.chat.id, 'Try again, please.')
 
 
+def guess(message):
+    user_text = message.text
+    name = queries.guess(user_text)
+    bot.send_message(message.chat.id, name)
+    users[message.chat.id].status = 'start'
+
+
 commands['new_docs'] = new_docs
 commands['doc'] = doc
 commands['beautiful_topic'] = beautiful_topic
@@ -230,6 +241,7 @@ commands['new_topics'] = new_topics
 commands['describe_doc'] = describe_doc
 commands['describe_topic'] = describe_topic
 commands['words'] = words
+commands['guess'] = guess
 
 
 
