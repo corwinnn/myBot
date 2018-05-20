@@ -95,7 +95,18 @@ def words(topic):
         .where(Article.topic == topic)\
         .group_by(Tag.name)\
         .order_by(-peewee.fn.count(Tag.name))\
-        .limit(5)
+        .limit(10)
+    right_words= []
+    cur_word = 0
+    while cur_word < 10 and len(right_words) < 5:
+        isRight = True
+        for j in right_words:
+            if words[cur_word].tolower() == j.tolower():
+                isRight = False
+        if isRight:
+            right_words.append(words[cur_word])
+        cur_word += 1
+
     return words
 
 
