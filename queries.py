@@ -125,9 +125,9 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
     file_name2 = file_name + '2.png'
     file_name3 = file_name + '3.png'
     make_plot(data=data_kol,
-              label="distribution of the word length",
-              xlabel='word\'s length',
-              ylabel='Number of words with this length',
+              label="word-length distribution",
+              xlabel='word length',
+              ylabel='number of repetitions',
               view="bar"
               )
     plt.savefig(file_name1)
@@ -137,9 +137,9 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
         freq[value] += 1
     end_data = [freq[i] for i in range(max(freq.keys()))]
     make_plot(data=end_data,
-              label="distribution of the different words",
-              xlabel='different words',
-              ylabel='Number of these words',
+              label="word-frequency distribution",
+              xlabel='words that repeated x times',
+              ylabel='number of repetitions',
               view="bar"
               )
 
@@ -147,7 +147,7 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
     plt.close()
     make_plot(data=data_part,
               label="distribution of the number words in " + part_type,
-              xlabel='sentences',
+              xlabel='number of sentence',
               ylabel='Number of words',
               view="bar"
               )
