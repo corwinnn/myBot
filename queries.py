@@ -107,7 +107,7 @@ def words(topic):
             right_words.append(words[cur_word])
         cur_word += 1
 
-    return words
+    return right_words
 
 
 def make_plots(file_name, data_kol, data_freq, data_part, part_type):
