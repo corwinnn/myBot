@@ -28,6 +28,7 @@ def make_plot(data, label, xlabel, ylabel, view):
                            colormap='jet')
     plot.set_xlabel(xlabel)
     plot.set_ylabel(ylabel)
+    plot.legend_.remove()
     return plot
 
 
@@ -130,7 +131,6 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               view="bar"
               )
     plt.savefig(file_name1)
-    plt.clf()
     plt.close()
     freq = defaultdict(int)
     for value in data_freq:
@@ -144,7 +144,6 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               )
 
     plt.savefig(file_name2)
-    plt.clf()
     plt.close()
     make_plot(data=data_part,
               label="distribution of the number words in " + part_type,
@@ -154,7 +153,6 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
               )
 
     plt.savefig(file_name3)
-    plt.clf()
     plt.close()
     return file_name1, file_name2, file_name3
 
