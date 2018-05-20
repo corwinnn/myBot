@@ -101,7 +101,7 @@ def words(topic):
     while cur_word < 10 and len(right_words) < 5:
         isRight = True
         for j in right_words:
-            if words[cur_word].lower() == j.lower():
+            if words[cur_word].name.lower() == j.name.lower():
                 isRight = False
         if isRight:
             right_words.append(words[cur_word])
