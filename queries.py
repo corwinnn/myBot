@@ -97,18 +97,18 @@ def words(topic):
         .group_by(Tag.name)\
         .order_by(-peewee.fn.count(Tag.name))\
         .limit(10)
-    right_words= []
+    valid_words= []
     cur_word = 0
-    while cur_word < 10 and len(right_words) < 5:
-        isRight = True
-        for j in right_words:
+    while cur_word < 10 and len(valid_words) < 5:
+        is_valid = True
+        for j in valid_words:
             if words[cur_word].name.lower() == j.name.lower():
-                isRight = False
-        if isRight:
-            right_words.append(words[cur_word])
+                is_valid = False
+        if is_valid:
+            valid_words.append(words[cur_word])
         cur_word += 1
 
-    return right_words
+    return valid_words
 
 
 def make_plots(file_name, data_kol, data_freq, data_part, part_type):

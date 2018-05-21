@@ -216,8 +216,8 @@ def beautiful_topic(message):
     :param message: сообщение
     """
     user_text = message.text
-    isBeautifuled = queries.beautiful(user_text, 'awesome' + str(message.chat.id) + '.png')
-    if isBeautifuled:
+    is_beautifuled = queries.beautiful(user_text, 'awesome' + str(message.chat.id) + '.png')
+    if is_beautifuled:
         with open('awesome' + str(message.chat.id) + '.png', 'rb') as btf:
             bot.send_photo(message.chat.id, btf)
         users[message.chat.id].status = 'start'

@@ -70,6 +70,6 @@ while True:
 
         db.close()
         print('done')
-        sleep(1000)
+        sleep(config.TIME_TO_SLEEP)
     except:
         print('ups')
