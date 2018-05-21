@@ -67,7 +67,7 @@ def topic(topic_name):
         articles = Article.select()\
             .where(Article.topic == topic_name)\
             .order_by(-Article.upd)\
-            .limit(5)
+            .limit(config.REQUIRED_NUMBER_OF_WORDS)
         return desc, articles
     except:
         return None, None
@@ -96,10 +96,10 @@ def words(topic):
         .where(Article.topic == topic)\
         .group_by(Tag.name)\
         .order_by(-peewee.fn.count(Tag.name))\
-        .limit(10)
+        .limit(config.TAKEN_NUMBER_OF_WORDS)
     valid_words= []
     cur_word = 0
-    while cur_word < 10 and len(valid_words) < 5:
+    while cur_word < config.TAKEN_NUMBER_OF_WORDS and len(valid_words) < config.REQUIRED_NUMBER_OF_WORDS:
         is_valid = True
         for j in valid_words:
             if words[cur_word].name.lower() == j.name.lower():
@@ -121,9 +121,9 @@ def make_plots(file_name, data_kol, data_freq, data_part, part_type):
     :param part_type: название части
     :return: названия 3х файлов
     """
-    file_name1 = file_name + '1.png'
-    file_name2 = file_name + '2.png'
-    file_name3 = file_name + '3.png'
+    file_name1 = file_name + 'wldist.png'
+    file_name2 = file_name + 'wfdist.png'
+    file_name3 = file_name + 'wndist.png'
     make_plot(data=data_kol,
               label="word-length distribution",
               xlabel='word length',
@@ -201,14 +201,14 @@ def describe_topic(topic_name, file_name):
         aver = sum(articles_len)/len(articles_len)
         keys = [int(x) for x in topic_words_len.keys()]
         len_max = max(keys)
-        kol_with_len = [0 for i in range(len_max + 1)]
+        count_with_len = [0 for i in range(len_max + 1)]
         for i in range(1, len_max + 1):
             if str(i) in topic_words_len.keys():
-                kol_with_len[i] = topic_words_len[str(i)]
+                count_with_len[i] = topic_words_len[str(i)]
             else:
-                kol_with_len[i] = 0
-        kol_freq = sorted(topic_words_freq.values())
-        files = make_plots(file_name, kol_with_len, kol_freq, articles_len, 'articles')
+                count_with_len[i] = 0
+        count_freq = sorted(topic_words_freq.values())
+        files = make_plots(file_name, count_with_len, count_freq, articles_len, 'articles')
         return articles_amount, aver, files
     except:
         return None, None, None, None, None

@@ -27,6 +27,7 @@ def update_topic_stat(topic, articles):
     fill_words(all_topic_text.split(), topic_words_freq, topic_words_len)
     return json.dumps(topic_words_len), json.dumps(topic_words_freq)
 
+
 while True:
     try:
         db.close()

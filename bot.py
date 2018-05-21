@@ -236,17 +236,15 @@ def guess(message):
     users[message.chat.id].status = 'start'
 
 
-commands['new_docs'] = new_docs
-commands['doc'] = doc
-commands['beautiful_topic'] = beautiful_topic
-commands['start'] = start
-commands['topic'] = topic
-commands['new_topics'] = new_topics
-commands['describe_doc'] = describe_doc
-commands['describe_topic'] = describe_topic
-commands['words'] = words
-commands['guess'] = guess
-
+commands = {'new_docs': new_docs,
+            'doc': doc,
+            'beautiful_topic': beautiful_topic,
+            'start': start,
+            'topic': topic,
+            'new_topics': new_topics,
+            'describe_doc': describe_doc,
+            'words': words,
+            'guess': guess}
 
 
 @bot.message_handler(content_types=['text'])
