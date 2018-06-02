@@ -2,6 +2,7 @@ import json
 import re
 import queries
 import config
+from config import father
 import telebot
 from User import User
 
@@ -9,8 +10,6 @@ from User import User
 users = dict()
 bot = telebot.TeleBot(config.token)
 commands = dict()
-father = None
-global father
 with open('botCommands.json') as bot_activity_file:
     bot_activity = json.loads(bot_activity_file.read())
 
@@ -35,7 +34,7 @@ def get_info_from_user(message, status, answer):
     if father is None:
         if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
             father = message.chat.id
-    if father is not None and message.chat.id != father:
+    if config.father is not None and message.chat.id != father:
         bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
     users[message.chat.id].status = status
     bot.send_message(message.chat.id, answer)
