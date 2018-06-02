@@ -10,7 +10,7 @@ users = dict()
 bot = telebot.TeleBot(config.token)
 commands = dict()
 father = None
-
+global father
 with open('botCommands.json') as bot_activity_file:
     bot_activity = json.loads(bot_activity_file.read())
 
