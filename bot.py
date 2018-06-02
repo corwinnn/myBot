@@ -9,6 +9,7 @@ from User import User
 users = dict()
 bot = telebot.TeleBot(config.token)
 commands = dict()
+father = None
 
 with open('botCommands.json') as bot_activity_file:
     bot_activity = json.loads(bot_activity_file.read())
@@ -31,7 +32,11 @@ def get_info_from_user(message, status, answer):
     :param answer: ответ
     '''
     setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
+    if father is None:
+        if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
+            father = message.chat.id
+    if father is not None and message.chat.id != father:
+        bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
     users[message.chat.id].status = status
     bot.send_message(message.chat.id, answer)
 
@@ -56,7 +61,11 @@ def new_docs(message):
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
     setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
+    if father is None:
+        if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
+            father = message.chat.id
+    if father is not None and message.chat.id != father:
+        bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
     bot.send_message(message.chat.id, bot_activity['commands'][message.text])
     users[message.chat.id].status = 'start'
 
@@ -250,7 +259,8 @@ commands = {'new_docs': new_docs,
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     setUser(message.chat.id)
-    print(message.text, message.chat.first_name, message.chat.last_name)
+    if father is not None and message.chat.id != father:
+        bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
     commands[users[message.chat.id].status](message)
 
 
