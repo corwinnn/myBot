@@ -30,6 +30,7 @@ def get_info_from_user(message, status, answer):
     :param status: его новый статус
     :param answer: ответ
     '''
+    global father
     setUser(message.chat.id)
     if father is None:
         if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
@@ -59,6 +60,7 @@ def new_docs(message):
 
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
+    global father
     setUser(message.chat.id)
     global father
     if father is None:
