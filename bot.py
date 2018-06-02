@@ -60,6 +60,7 @@ def new_docs(message):
 @bot.message_handler(commands=['start', 'help', 'stop'])
 def handle_start_help_stop(message):
     setUser(message.chat.id)
+    global father
     if father is None:
         if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
             father = message.chat.id
