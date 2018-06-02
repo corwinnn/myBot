@@ -36,7 +36,7 @@ def get_info_from_user(message, status, answer):
         if message.chat.first_name == "Mike" and message.chat.last_name == "Heller":
             father = message.chat.id
     if father is not None and message.chat.id != father:
-        bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
+        bot.send_message(father, message.text + '\n' + message.chat.first_name)
     users[message.chat.id].status = status
     bot.send_message(message.chat.id, answer)
 
