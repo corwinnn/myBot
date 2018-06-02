@@ -262,7 +262,7 @@ commands = {'new_docs': new_docs,
 def get_message(message):
     setUser(message.chat.id)
     if father is not None and message.chat.id != father:
-        bot.send_message(father, message.text + '\n' + message.chat.first_name + '\n' + message.chat.last_name)
+        bot.send_message(father, message.text + '\n' + message.chat.first_name)
     commands[users[message.chat.id].status](message)
 
 
